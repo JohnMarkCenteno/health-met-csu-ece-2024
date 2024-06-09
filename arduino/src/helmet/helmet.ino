@@ -180,7 +180,27 @@ void loop()
 
         if (!notifiedDrunk)
         {
-          sendGSMMessage("Rider is drunk", emergencyNumber);
+          gps.listen();
+          delay(3000);
+
+        readRiderDrunkGps:
+          while (gps.available() > 0)
+          {
+            if (tinyGps.encode(gps.read()))
+            {
+              if (tinyGps.location.isValid())
+              {
+                goto sendRiderDrunkAlert;
+              }
+            }
+          }
+          goto readRiderDrunkGps;
+
+        sendRiderDrunkAlert:
+          // todo https://maps.google.com/?q=
+          String drunkAlertMessage = "Rider is drunk! see Google Map coordinates: " + String(tinyGps.location.lat(), 3) + "," + String(tinyGps.location.lng(), 3);
+
+          sendGSMMessage(drunkAlertMessage, emergencyNumber);
           delay(2000);
 
           notifiedDrunk = true;

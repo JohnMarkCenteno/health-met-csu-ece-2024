@@ -186,7 +186,7 @@ void loop()
       Serial.print(", ");
       Serial.println(LOCKED_LON);
 
-      if (kmFromCurrentToLockedLocation > 0.5)
+      if (kmFromCurrentToLockedLocation > 0.1)
       {
         // todo https://maps.google.com/?q=
         String vehicleTheftMessage = "Vehicle Theft! see Google Map coordinates: " + String(tinyGps.location.lat(), 3) + "," + String(tinyGps.location.lng(), 3);
