@@ -88,7 +88,7 @@ void loop()
       data[messageLength] = '\0';
       trimWhitespace(data);
 
-      Serial.println(data);
+      // ! Serial.println(data);
 
       if (strcmp(data, "riderReady") == 0)
       {
@@ -125,9 +125,9 @@ void loop()
         LOCKED_LAT = tinyGps.location.lat();
         LOCKED_LON = tinyGps.location.lng();
 
-        Serial.print(LOCKED_LAT);
-        Serial.print(", ");
-        Serial.println(LOCKED_LON);
+        // ! Serial.print(LOCKED_LAT);
+        // ! Serial.print(", ");
+        // ! Serial.println(LOCKED_LON);
 
         relay.off();
         countdown.stop();
@@ -180,8 +180,8 @@ void loop()
               LOCKED_LON) /
           1000;
 
-      Serial.print(kmFromCurrentToLockedLocation);
-      Serial.print(": ");
+      // ! Serial.print(kmFromCurrentToLockedLocation);
+      // ! Serial.print(": ");
       Serial.print(LOCKED_LAT);
       Serial.print(", ");
       Serial.println(LOCKED_LON);
@@ -195,10 +195,11 @@ void loop()
         delay(2000);
       }
 
-      locationCheckCountdown.restart();
+      locationCheckCountdown.stop();
+      locationCheckCountdown.start(1);
     }
 
-    Serial.println("ping");
+    // ! Serial.println("ping");
     sendHC12("ping");
     delay(1000);
   }
@@ -337,9 +338,9 @@ void sendHC12(String mess)
 
 void sendGSMMessage(String message, String number)
 {
-  Serial.print(number);
-  Serial.print(": ");
-  Serial.println(message);
+  // ! Serial.print(number);
+  // ! Serial.print(": ");
+  // ! Serial.println(message);
 
   sim.println("AT+CMGF=1");
   delay(200);
